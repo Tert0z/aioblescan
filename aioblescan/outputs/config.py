@@ -2,6 +2,7 @@ import yaml
 from dataclasses import dataclass
 from typing import List, Optional, Dict
 
+
 @dataclass
 class InfluxDBConfig:
     url: str
@@ -16,5 +17,4 @@ class InfluxDBConfig:
 
 @dataclass
 class OutputsConfig:
-    influxdb: Optional[InfluxDBConfig] 
-
+    influxdb: Optional[InfluxDBConfig]

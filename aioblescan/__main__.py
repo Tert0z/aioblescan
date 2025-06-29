@@ -75,7 +75,7 @@ def my_process(data):
             xx = decoder.decode(ev)
             if xx:
                 for output in outputs:
-                        output.write(xx)
+                    output.write(xx)
                 if opts.leader:
                     print(f"{leader} {json.dumps(xx)}")
                 else:
@@ -236,7 +236,7 @@ def main():
 
     outputConfig = None
     if opts.outputs_config:
-        with open(opts.outputs_config, 'r') as f:
+        with open(opts.outputs_config, "r") as f:
             data = yaml.safe_load(f)
             outputConfig = from_dict(outputs_config.OutputsConfig, data)
 

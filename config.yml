@@ -1,0 +1,14 @@
+influxdb:
+  token: "token"
+  url: "http://influxdb.lan:8086"
+  org: local
+  bucket: test
+  measurement: temps
+  fieldsMap:
+    temperature: temperature
+    humidity: humidity
+    battery_volts: voltage
+  tagsMap:
+    "mac address": "sensorname"
+  tagsValueMap:
+    a4:ff:ff:ff:ff:ff: Kitchen

@@ -26,16 +26,21 @@ import asyncio
 import argparse
 import re
 import json
+import yaml
+from dacite import from_dict
 import aioblescan as aiobs
 from aioblescan.plugins import EddyStone
 from aioblescan.plugins import RuuviWeather
 from aioblescan.plugins import ATCMiThermometer
 from aioblescan.plugins import ThermoBeacon
 from aioblescan.plugins import Tilt
+from aioblescan.outputs import influxdb
+from aioblescan.outputs import config as outputs_config
 
 # global
 opts = None
 decoders = []
+outputs = []
 
 
 def check_mac(val):
@@ -49,6 +54,7 @@ def check_mac(val):
 
 def my_process(data):
     global opts
+    global outputs
 
     ev = aiobs.HCI_Event()
     xx = ev.decode(data)
@@ -68,6 +74,8 @@ def my_process(data):
         for leader, decoder in decoders:
             xx = decoder.decode(ev)
             if xx:
+                for output in outputs:
+                    output.write(xx)
                 if opts.leader:
                     print(f"{leader} {json.dumps(xx)}")
                 else:
@@ -129,6 +137,7 @@ async def amain(args=None):
 
 def main():
     global opts
+    global outputs
 
     parser = argparse.ArgumentParser(description="Track BLE advertised packets")
     parser.add_argument(
@@ -214,10 +223,28 @@ def main():
         dest="leader",
         help="suppress leading text identifier",
     )
+    parser.add_argument(
+        "--outputs-config",
+        type=str,
+        dest="outputs_config",
+        help="Path to the YAML configuration file for outputs.",
+    )
     try:
         opts = parser.parse_args()
     except Exception as e:
         parser.error("Error: " + str(e))
+
+    outputConfig = None
+    if opts.outputs_config:
+        with open(opts.outputs_config, "r") as f:
+            data = yaml.safe_load(f)
+            outputConfig = from_dict(outputs_config.OutputsConfig, data)
+
+    if outputConfig and outputConfig.influxdb:
+        db = influxdb.InfluxDB(
+            outputConfig.influxdb,
+        )
+        outputs.append(db)
 
     if opts.eddy:
         decoders.append(("Google Beacon", EddyStone()))

@@ -32,6 +32,7 @@ from aioblescan.plugins import EddyStone
 # A few convenience functions
 #
 
+
 # Get sign using first bit and return value with sign + fraction
 def get_temp(int, frac):
     if (int >> 7) & 1:
@@ -76,7 +77,7 @@ class RuuviWeather(object):
                         dx = int.from_bytes(val[6:8], "big", signed=True)
                         dy = int.from_bytes(val[8:10], "big", signed=True)
                         dz = int.from_bytes(val[10:12], "big", signed=True)
-                        length = sqrt(dx ** 2 + dy ** 2 + dz ** 2)
+                        length = sqrt(dx**2 + dy**2 + dz**2)
                         result["accelerometer"] = (dx, dy, dz, length)
                         result["voltage"] = int.from_bytes(val[12:14], "big")
                         return result
@@ -93,7 +94,7 @@ class RuuviWeather(object):
                         dx = int.from_bytes(val[7:9], "big", signed=True)
                         dy = int.from_bytes(val[9:11], "big", signed=True)
                         dz = int.from_bytes(val[11:13], "big", signed=True)
-                        length = sqrt(dx ** 2 + dy ** 2 + dz ** 2)
+                        length = sqrt(dx**2 + dy**2 + dz**2)
                         result["accelerometer"] = (dx, dy, dz, length)
                         result["voltage"] = (
                             int.from_bytes(val[13:15], "big") >> 5
@@ -147,7 +148,7 @@ class RuuviWeather(object):
                         dx = int.from_bytes(val[6:8], "big", signed=True)
                         dy = int.from_bytes(val[8:10], "big", signed=True)
                         dz = int.from_bytes(val[10:12], "big", signed=True)
-                        length = sqrt(dx ** 2 + dy ** 2 + dz ** 2)
+                        length = sqrt(dx**2 + dy**2 + dz**2)
                         result["accelerometer"] = (dx, dy, dz, length)
                         result["voltage"] = int.from_bytes(val[12:14], "big")
                         return result

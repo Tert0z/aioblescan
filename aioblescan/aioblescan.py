@@ -45,6 +45,8 @@ EDDY_UUID = b"\xfe\xaa"  # Google UUID
 
 # Generated from https://www.uuidgenerator.net/ 906ed6ab-6785-4eab-9847-bf9889c098ae alternative is 668997f8-4acd-48ea-b35b-749e54215860
 MY_UUID = b"\x90\x6e\xd6\xab\x67\x85\x4e\xab\x98\x47\xbf\x98\x89\xc0\x98\xae"
+
+
 # MY_UUID = b'\x66\x89\x97\xf8\x4a\xcd\x48\xea\xb3\x5b\x74\x9e\x54\x21\x58\x60'
 #
 # Let's define some useful types
@@ -1719,6 +1721,7 @@ def create_bt_socket(interface=None):
             if not interface:
                 interface = "ubt0"
             libc = ctypes.CDLL(ctypes.util.find_library("c"), use_errno=True)
+
             # bind/connect via libc is required due to https://bugs.python.org/issue41130
             class SockaddrHci(ctypes.Structure):
                 _fields_ = [

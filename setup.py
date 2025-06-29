@@ -20,7 +20,7 @@ setuptools.setup(
     url="http://github.com/frawau/aioblescan",
     keywords=["bluetooth", "advertising", "hci", "ble"],
     license="MIT",
-    install_requires=["dacite", "influxdb-client"],
+    install_requires=["dacite", "influxdb-client", "pyyaml"],
     extras_require={"dev": ["pytest"]},
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
